@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff8f0;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .photo-box img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .photo-box img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  {{ content }}
+</body>
+</html>

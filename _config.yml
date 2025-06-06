@@ -1,0 +1,4 @@
+title: "Wedding Album"
+description: "Auto-displaying all images from assets folder"
+markdown: kramdown
+exclude: ["README.md"]
