@@ -15,27 +15,19 @@ title: Rajesh & Akansha Wedding Album
       {% for file in site.static_files %}
         {% if file.path contains 'assets/' %}
           {% if file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.JPG' or file.extname == '.JPEG' %}
-            { path: "{{ file.path }}", name: "{{ file.name }}" },
+            "{{ file.path }}",
           {% endif %}
         {% endif %}
       {% endfor %}
     ];
 
-    files.forEach(file => {
+    files.forEach(src => {
       const img = new Image();
-      img.src = file.path;
-      img.alt = file.name;
-
+      img.src = src;
       img.onload = function () {
         const wrapper = document.createElement("div");
         wrapper.classList.add("photo-box");
-
-        const caption = document.createElement("div");
-        caption.classList.add("caption");
-        caption.innerText = file.name;
-
         wrapper.appendChild(img);
-        wrapper.appendChild(caption);
 
         if (img.naturalWidth > img.naturalHeight) {
           document.getElementById("landscape-gallery").appendChild(wrapper);
