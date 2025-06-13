@@ -1081,58 +1081,53 @@ const allFiles = [
     document.getElementById("portrait-gallery").innerHTML = "";
     document.getElementById("landscape-gallery").innerHTML = "";
   }
+function filterByFolder(folder) {
+  clearGalleries();
 
-  function filterByFolder(folder) {
-    clearGalleries();
+  const baseUrl = "/w";
+  const folderPath = "assets/" + folder + "/";
 
-    const baseUrl = "/w";
+  const filteredFiles = allFiles
+    .filter(file => file.path.startsWith("/" + folderPath))
+    .sort((a, b) => a.name.localeCompare(b.name)); // <-- Sort alphabetically by name
 
-
-    const folderPath = "assets/" + folder + "/";
-
-    const filteredFiles = allFiles.filter(file => file.path.startsWith("/" + folderPath));
-
-    if (filteredFiles.length === 0) {
-      alert("No images found in folder: " + folder);
-      return;
-    }
-
-    filteredFiles.forEach(file => {
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("photo-box");
-
-      // Image with full-size on click
-      const link = document.createElement("a");
-      link.href = baseUrl + "/" +file.path;
-      link.target = "_blank";
-
-      const img = new Image();
-      img.src = baseUrl + "/" +file.path;
-      img.alt = file.name;
-      img.classList.add("album-img");
-      link.appendChild(img);
-
-      // Download button
-      const downloadBtn = document.createElement("a");
-      downloadBtn.href = baseUrl + "/" +file.path;
-      downloadBtn.download = file.name;
-      downloadBtn.classList.add("download-button");
-      downloadBtn.innerText = "⬇️ Download";
-
-      // Add to wrapper
-      wrapper.appendChild(link);
-      wrapper.appendChild(downloadBtn);
-
-      // Portrait or Landscape
-      img.onload = function () {
-        if (img.naturalWidth > img.naturalHeight) {
-          document.getElementById("landscape-gallery").appendChild(wrapper);
-        } else {
-          document.getElementById("portrait-gallery").appendChild(wrapper);
-        }
-      };
-    });
+  if (filteredFiles.length === 0) {
+    alert("No images found in folder: " + folder);
+    return;
   }
+
+  filteredFiles.forEach(file => {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("photo-box");
+
+    const link = document.createElement("a");
+    link.href = baseUrl + "/" + file.path;
+    link.target = "_blank";
+
+    const img = new Image();
+    img.src = baseUrl + "/" + file.path;
+    img.alt = file.name;
+    img.classList.add("album-img");
+    link.appendChild(img);
+
+    const downloadBtn = document.createElement("a");
+    downloadBtn.href = baseUrl + "/" + file.path;
+    downloadBtn.download = file.name;
+    downloadBtn.classList.add("download-button");
+    downloadBtn.innerText = "⬇️ Download";
+
+    wrapper.appendChild(link);
+    wrapper.appendChild(downloadBtn);
+
+    img.onload = function () {
+      if (img.naturalWidth > img.naturalHeight) {
+        document.getElementById("landscape-gallery").appendChild(wrapper);
+      } else {
+        document.getElementById("portrait-gallery").appendChild(wrapper);
+      }
+    };
+  });
+}
 </script>
 
 
